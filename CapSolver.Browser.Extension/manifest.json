@@ -1,0 +1,92 @@
+{
+  "manifest_version": 3,
+  "default_locale": "en",
+  "icons": {
+    "16": "icons/icon-16x16.png",
+    "48": "icons/icon-48x48.png",
+    "128": "icons/icon-128x128.png"
+  },
+  "version": "1.0.0",
+  "permissions": [
+    "storage",
+    "tabs"
+  ],
+  "host_permissions": [
+    "*://*/*"
+  ],
+  "action": {
+    "default_icon": "icons/icon-48x48.png",
+    "default_popup": "www/index.html#/popup",
+    "default_title": "CapSolver: Captcha Bypass Extension"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "all_frames": true,
+      "run_at": "document_start",
+      "matches": [
+        "<all_urls>"
+      ],
+      "css": [
+        "assets/content.css"
+      ],
+      "js": [
+        "my-content-script.js"
+      ]
+    },
+    {
+      "matches": [
+        "*://*.arkoselabs.com/fc/*",
+        "*://*.funcaptcha.com/fc/*"
+      ],
+      "js": [
+        "funcaptcha-recognition.js"
+      ],
+      "run_at": "document_end",
+      "all_frames": true,
+      "match_about_blank": true
+    },
+    {
+      "matches": [
+        "*://*.hcaptcha.com/captcha/*"
+      ],
+      "js": [
+        "hcaptcha-recognition.js"
+      ],
+      "run_at": "document_end",
+      "all_frames": true,
+      "match_about_blank": true
+    },
+    {
+      "matches": [
+        "*://*.google.com/recaptcha/*",
+        "*://*.recaptcha.net/recaptcha/*",
+        "*://recaptcha.net/recaptcha/*"
+      ],
+      "js": [
+        "recaptcha-recognition.js"
+      ],
+      "run_at": "document_end",
+      "all_frames": true,
+      "match_about_blank": true
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self';"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "*"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ],
+  "name": "CapSolver: Captcha Bypass Extension",
+  "short_name": "CapSolver: Captcha Bypass Extension",
+  "description": "Automatically solve reCAPTCHA, hCaptcha, FunCAPTCHA, AWS WAF, and more types on any webpage."
+}
