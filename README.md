@@ -1,0 +1,2 @@
+# xboxgen
+gen xbox accs
